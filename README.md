@@ -14,26 +14,20 @@ A web application to browse and manage vendors with a contact feature, toast not
 - 🔔 **Toast Notifications** – Interactive success/error messages.  
 - 🎨 **Dark Mode Support** – Theme-friendly UI.  
 
-## **📸 Screenshots**  
-[Add relevant screenshots here]
-
 ---
 
 ## **🛠️ Tech Stack**  
 - **Frontend:** React, Tailwind CSS  
-- **Backend:** Node.js, Express.js (API integration)  
-- **Database:** MongoDB (if applicable)  
 - **State Management:** React Context API  
 - **Routing:** React Router  
-- **APIs:** Custom vendor API  
 
 ---
 
 ## **📦 Installation**  
 1. **Clone the repository**  
    ```sh
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+   git clone https://github.com/gaurav0330/FindyIt.git
+   cd FindyIt
    ```
 
 2. **Install dependencies**  
@@ -47,47 +41,18 @@ A web application to browse and manage vendors with a contact feature, toast not
    ```
 
 4. **Open in browser**  
-   Navigate to `http://localhost:3000` in your browser.
+   Navigate to `http://localhost:5173/` in your browser.
 
 ---
 
 ## **📖 Usage**  
 - Visit the homepage to browse vendors.  
 - Click the **Contact** button to trigger a toast notification.  
-- Switch between light/dark mode using the theme toggle.  
+- Switch between light/dark mode using the theme toggle. 
+- Shows the location omn google map by usign their co-ordinates
 - View vendor details such as **location, rating, and category**.  
 
----
-
-## **📂 Project Structure**  
-```
-📦 your-project
- ┣ 📂 src
- ┃ ┣ 📂 components
- ┃ ┃ ┣ 📜 VendorCard.jsx
- ┃ ┃ ┣ 📜 Toaster.jsx
- ┃ ┣ 📂 hooks
- ┃ ┃ ┣ 📜 use-toast.js
- ┃ ┣ 📂 lib
- ┃ ┃ ┣ 📜 utils.js
- ┃ ┣ 📂 pages
- ┃ ┃ ┣ 📜 VendorListing.jsx
- ┃ ┃ ┣ 📜 NotFound.jsx
- ┃ ┣ 📂 contexts
- ┃ ┃ ┣ 📜 ThemeContext.jsx
- ┃ ┣ 📂 assets
- ┃ ┣ 📜 App.jsx
- ┃ ┣ 📜 main.jsx
- ┣ 📜 package.json
- ┣ 📜 README.md
-```
-
----
-
-## **🚧 Known Issues**  
-- **API Errors:** If the API is unreachable, mock data is used.  
-- **Contact Button:** Currently, it only triggers a toast. Actual functionality is a future update.  
-
+  
 ---
 
 ## **🙌 Contributing**  
@@ -116,8 +81,7 @@ This project is licensed under the **MIT License**.
 
 ## **📞 Contact**  
 If you have any questions, feel free to reach out:  
-📧 Email: [your-email@example.com]  
-🐦 Twitter: [@your-handle](https://twitter.com/your-handle)  
+📧 Email: [gauravjikar070806@gmail.com]  
 
 ---
 
