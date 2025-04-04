@@ -1,7 +1,3 @@
-Here's a **README.md** file for your project. It includes installation instructions, features, usage, and contribution guidelines.  
-
----
-
 # **Vendor Listing & Management Platform**  
 
 A web application to browse and manage vendors with a contact feature, toast notifications, and a modern UI.
