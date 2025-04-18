@@ -7,10 +7,7 @@ import SearchAndFilterBar from '../components/ui/SearchAndFilterBar';
 import Pagination from '../components/ui/Pagination';
 import { mockVendors } from '../services/vendorService';
 
-/**
- * VendorListing Component
- * Displays a list of vendors with search, filter, and pagination features.
- */
+
 export default function VendorListing() {
   // State variables for search, category filtering, and pagination
   const [searchTerm, setSearchTerm] = useState('');
