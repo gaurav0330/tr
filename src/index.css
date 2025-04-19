@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Default Light Mode Variables */
+:root {
+    --background: 210 20% 98%;
+  --text: 217 33% 17%;
+  --accent: 220 90% 56%;    /* blue-500 */
+    --primary: 200 100% 50%;
+    --secondary: 142 76% 36%;  /* green-500 */
+  }
+  
+  /* Dark Mode Variables */
+  .dark {
+    --background: 218 39% 10%;
+    --text: 0 0% 100%;
+    --accent: 142 71% 45%;    /* green-400 */
+    --primary: 180 100% 35%;
+    --secondary: 142 76% 36%;
+  }

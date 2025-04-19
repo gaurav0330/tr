@@ -3,7 +3,7 @@
 
 module.exports = {
   darkMode: ["class"],
-  content: ["./src/index.html", ,"./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/index.html","./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       borderRadius: {
@@ -12,6 +12,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        text: "hsl(var(--text))", 
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
