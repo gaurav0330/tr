@@ -1,76 +1,70 @@
 import { Link } from "react-router-dom";
-import { 
-  MoonIcon, SunIcon, MenuIcon, XIcon, HomeIcon, 
-  BriefcaseIcon, InfoIcon, MailIcon, MapPinIcon 
+import {
+  MoonIcon, SunIcon, MenuIcon, XIcon,
+  HomeIcon, BriefcaseIcon, InfoIcon, MailIcon, MapPinIcon
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { useIsMobile } from "../../hooks/use-mobile.js";
 import { useState } from "react";
 
-/**
- * Header component for the application
- */
 export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          
-          {/* Logo and App Name */}
-          <Link to="/" className="flex items-center space-x-2">
-            <MapPinIcon size={28} className="text-blue-600 dark:text-blue-400" />
-            <span className="text-blue-600 dark:text-blue-400 font-extrabold text-2xl sm:text-3xl tracking-wide">
-              Findy<span className="text-gray-900 dark:text-white">It</span>
-            </span>
-          </Link>
+    <header className="sticky top-0 z-50 py-4 shadow-md bg-background text-text transition-colors">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-2">
+          <MapPinIcon size={28} className="text-accent" />
+          <span className="text-2xl font-bold">
+            Findy<span className="text-accent">It</span>
+          </span>
+        </Link>
 
-          {/* Mobile Menu Button */}
-          {isMobile && (
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
-            >
-              {isMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
-            </button>
-          )}
+        {/* Mobile Toggle */}
+        {isMobile && (
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-md hover:bg-accent/20 text-text">
+            {isMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
+          </button>
+        )}
 
-          {/* Navigation Links */}
-          <nav 
-            className={`md:flex space-x-6 ${isMobile ? "absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow-md md:shadow-none md:relative md:top-0" : "hidden md:flex"}`}
+        {/* Navigation */}
+        <nav className={`md:flex ${isMobile ? "absolute left-0 w-full bg-background text-text shadow-md top-16" : "hidden md:flex"} ${isMenuOpen ? "block" : "hidden md:block"} transition-colors`}>
+          <div className="flex flex-col md:flex-row md:space-x-6">
+            {[
+              { to: "/", label: "Home", Icon: HomeIcon },
+              { to: "/services", label: "Services", Icon: BriefcaseIcon },
+              { to: "/about", label: "About Us", Icon: InfoIcon },
+              { to: "/contact", label: "Contact", Icon: MailIcon }
+            ].map(({ to, label, Icon }) => (
+              <Link
+                to={to}
+                key={label}
+                className="flex items-center space-x-2 px-4 py-2 hover:text-accent transition-colors"
+              >
+                <Icon size={20} />
+                <span>{label}</span>
+              </Link>
+            ))}
+          </div>
+        </nav>
+
+        {/* Right-side actions */}
+        <div className="flex items-center space-x-4">
+          <Link to="/login" className="hover:underline hover:text-accent transition-colors">Login</Link>
+          <Link
+            to="/register"
+            className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
           >
-            <div 
-              className={`flex flex-col md:flex-row md:space-x-6 ${isMobile && !isMenuOpen ? "hidden" : "block"}`}
-            >
-              <Link to="/" className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                <HomeIcon size={20} />
-                <span>Home</span>
-              </Link>
-              <Link to="/services" className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                <BriefcaseIcon size={20} />
-                <span>Services</span>
-              </Link>
-              <Link to="/about" className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                <InfoIcon size={20} />
-                <span>About Us</span>
-              </Link>
-              <Link to="/contact" className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                <MailIcon size={20} />
-                <span>Contact</span>
-              </Link>
-            </div>
-          </nav>
-
-          {/* Dark Mode Toggle */}
+            Register
+          </Link>
           <button
             onClick={toggleDarkMode}
-            className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition duration-300"
-            aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            className="ml-2 p-2 rounded-full bg-accent text-background hover:opacity-80 transition"
           >
-            {isDarkMode ? <SunIcon size={24} /> : <MoonIcon size={24} />}
+            {isDarkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
           </button>
         </div>
       </div>

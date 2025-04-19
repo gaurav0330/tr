@@ -8,24 +8,24 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto py-10 px-6 sm:px-10 lg:px-16">
+    <footer className="bg-background text-text py-10 transition-colors">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-blue-400">FindyIt</h3>
-            <p className="text-gray-400">
+            <h3 className="text-xl font-semibold mb-4 text-accent">FindyIt</h3>
+            <p className="text-muted-foreground">
               Discover and connect with the best service providers in your area.
             </p>
             {/* Social Media Icons */}
             <div className="flex space-x-4 mt-4">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition">
+              <a href="#" className="text-muted-foreground hover:text-accent transition">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition">
+              <a href="#" className="text-muted-foreground hover:text-accent transition">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition">
+              <a href="#" className="text-muted-foreground hover:text-accent transition">
                 <Instagram size={20} />
               </a>
             </div>
@@ -33,25 +33,25 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-blue-400">Quick Links</h3>
+            <h3 className="text-xl font-semibold mb-4 text-accent">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition">
+                <Link to="/" className="text-muted-foreground hover:text-accent transition">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition">
+                <Link to="/about" className="text-muted-foreground hover:text-accent transition">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-400 hover:text-white transition">
+                <Link to="/services" className="text-muted-foreground hover:text-accent transition">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition">
+                <Link to="/contact" className="text-muted-foreground hover:text-accent transition">
                   Contact
                 </Link>
               </li>
@@ -60,8 +60,8 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-blue-400">Contact Us</h3>
-            <address className="text-gray-400 not-italic space-y-2">
+            <h3 className="text-xl font-semibold mb-4 text-accent">Contact Us</h3>
+            <address className="text-muted-foreground not-italic space-y-2">
               <p className="flex items-center space-x-2">
                 <MapPin size={18} />
                 <span>123 Business Street, San Francisco, CA 94103</span>
@@ -79,8 +79,10 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-10 pt-6 border-t border-gray-700 text-center text-gray-400">
-          <p>&copy; {currentYear} FindyIt. All rights reserved.</p>
+        <div className="mt-10 pt-6 border-t border-muted text-center">
+          <p className="text-muted-foreground">
+            &copy; {currentYear} FindyIt. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
