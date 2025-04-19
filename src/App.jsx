@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "./components/ui/toaster.jsx";
-import HomePage from "./pages/HomePage.jsx";
+
+import HowPage from "./pages/HowPage.jsx";
 
 function AppRouter() {
   return (
     <Routes>
       {/* Route for the new Landing (HowPage) */}
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HowPage />} />
     </Routes>
   );
 }
