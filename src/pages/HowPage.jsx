@@ -11,11 +11,18 @@ import HowItWorksSection from "../components/ui/Home/HowItWorksSection";
 export default function HowPage() {
   return (
     <div>
-      <Header />
+
+     
       <CategoriesSection />
       <HowItWorksSection />
 
-      <Footer />
+      {/* <Header /> */}
+      {/* <HeroSection />
+      <CategoryCards />
+      <HowItWorks />
+      <LoginOptions /> */}
+      {/* <Footer />  */}
+
     </div>
   );
 }
