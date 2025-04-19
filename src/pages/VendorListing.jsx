@@ -6,23 +6,21 @@ import VendorGrid from '../components/vendor/VendorGrid';
 import SearchAndFilterBar from '../components/ui/SearchAndFilterBar';
 import Pagination from '../components/ui/Pagination';
 import { mockVendors } from '../services/vendorService';
-
+import { useTheme } from '../contexts/ThemeContext'; // ⬅️ Import the context
 
 export default function VendorListing() {
+  const { themeColors } = useTheme(); // ⬅️ Grab themeColors from context
+
   // State variables for search, category filtering, and pagination
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const vendorsPerPage = 8; // Number of vendors displayed per page
+  const vendorsPerPage = 8;
 
-  // Reset pagination when search or filter criteria change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory]);
 
-  /**
-   * Filters vendors based on search term and selected category
-   */
   const filteredVendors = mockVendors.filter((vendor) => {
     const matchesSearch =
       searchTerm === '' ||
@@ -34,12 +32,8 @@ export default function VendorListing() {
     return matchesSearch && matchesCategory;
   });
 
-  // Extract unique categories for filtering dropdown
   const categories = [...new Set(mockVendors.map((vendor) => vendor.category))];
 
-  /**
-   * Handles pagination logic
-   */
   const indexOfLastVendor = currentPage * vendorsPerPage;
   const indexOfFirstVendor = indexOfLastVendor - vendorsPerPage;
   const currentVendors = filteredVendors.slice(indexOfFirstVendor, indexOfLastVendor);
@@ -49,7 +43,14 @@ export default function VendorListing() {
     <>
       <Header />
 
-      <main className="flex-grow bg-gray-50 dark:bg-gray-900">
+      <main
+        className="flex-grow"
+        style={{
+          backgroundColor: themeColors.background,
+          color: themeColors.text,
+          transition: 'background-color 0.3s ease',
+        }}
+      >
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           {/* Page Title */}
           <motion.div
@@ -58,10 +59,10 @@ export default function VendorListing() {
             transition={{ duration: 0.5 }}
             className="text-center mb-10"
           >
-            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-              <span className="text-blue-600 dark:text-blue-400">Find</span> the Best Service Providers
+            <h1 className="text-3xl font-extrabold sm:text-4xl" style={{ color: themeColors.text }}>
+              <span style={{ color: themeColors.accent }}>Find</span> the Best Service Providers
             </h1>
-            <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 sm:mt-4">
+            <p className="mt-3 max-w-2xl mx-auto text-xl sm:mt-4" style={{ color: themeColors.text }}>
               Discover top-rated vendors in your area
             </p>
           </motion.div>
