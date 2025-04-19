@@ -9,12 +9,12 @@ import Footer from "../components/ui/Footer"; // Import the Footer component
 export default function HowPage() {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       {/* <HeroSection />
       <CategoryCards />
       <HowItWorks />
       <LoginOptions /> */}
-      <Footer /> 
+      {/* <Footer />  */}
     </div>
   );
 }
