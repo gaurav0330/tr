@@ -6,8 +6,8 @@ import {
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { useIsMobile } from "../../hooks/use-mobile.js";
 import { useState } from "react";
-import DarkLogo from "../../assets/dark.png"; // Replace with actual import path
-import LightLogo from "../../assets/light.png"; // Replace with actual import path
+import DarkLogo from "../../assets/Dark.png";
+import LightLogo from "../../assets/light.png";
 
 export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
