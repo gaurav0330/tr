@@ -6,6 +6,8 @@ import {
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { useIsMobile } from "../../hooks/use-mobile.js";
 import { useState } from "react";
+import DarkLogo from "../../assets/dark.png"; // Replace with actual import path
+import LightLogo from "../../assets/light.png"; // Replace with actual import path
 
 export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -17,9 +19,14 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <MapPinIcon size={28} className="text-accent" />
+          <img
+            src={isDarkMode ? DarkLogo : LightLogo} // Conditionally render logo based on theme
+            alt="Logo"
+            className="h-8"
+          />
           <span className="text-2xl font-bold">
-            Findy<span className="text-accent">It</span>
+            <span className={isDarkMode ? "text-text" : "text-text"}>Findy</span>
+            <span className="text-logoIt">It</span>
           </span>
         </Link>
 
