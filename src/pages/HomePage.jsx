@@ -1,6 +1,4 @@
 // src/pages/HowPage.jsx
-import Header from "../components/ui/Header"; // Import the Header component
-import Footer from "../components/ui/Footer"; // Import the Footer component
 import CategoriesSection from "../components/ui/Home/CategoriesSection";
 import HowItWorksSection from "../components/ui/Home/HowItWorksSection";
 // import HeroSection from "../components/HeroSection";

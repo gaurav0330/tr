@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { isDarkMode } = useTheme();
@@ -44,7 +45,9 @@ export default function Login() {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center bg-background text-text transition-colors duration-300 ${themeClass} px-4`}>
+    <div
+      className={`min-h-screen flex items-center justify-center bg-background text-text transition-colors duration-300 ${themeClass} px-4`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -62,11 +65,10 @@ export default function Login() {
               key={r}
               onClick={() => setRole(r)}
               className={`px-4 py-2 rounded-full font-medium transition ${
-  role === r
-    ? "bg-accent text-background"
-    : "bg-muted text-muted-foreground hover:bg-muted/80"
-}`}
-
+                role === r
+                  ? "bg-accent text-background"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
             >
               {r.charAt(0).toUpperCase() + r.slice(1)}
             </button>
@@ -100,7 +102,9 @@ export default function Login() {
                 className="flex-1 px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
               />
             </div>
-            {errors.phone && <p className="text-sm text-red-500 mt-1">{errors.phone}</p>}
+            {errors.phone && (
+              <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+            )}
           </div>
 
           {/* Send OTP Button */}
@@ -133,7 +137,9 @@ export default function Login() {
                   onChange={(e) => setOtp(e.target.value)}
                   className="w-full px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
                 />
-                {errors.otp && <p className="text-sm text-red-500 mt-1">{errors.otp}</p>}
+                {errors.otp && (
+                  <p className="text-sm text-red-500 mt-1">{errors.otp}</p>
+                )}
               </div>
               <button
                 onClick={handleVerifyOtp}
@@ -153,9 +159,9 @@ export default function Login() {
         {/* Footer */}
         <p className="text-sm text-center mt-6 text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <a href="/register" className="text-accent hover:underline">
+          <Link to="/register" className="text-accent hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </motion.div>
     </div>
