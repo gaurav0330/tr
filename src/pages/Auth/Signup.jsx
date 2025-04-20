@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const { isDarkMode } = useTheme();
@@ -53,7 +54,9 @@ export default function Signup() {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center bg-background text-text transition-colors duration-300 ${themeClass}`}>
+    <div
+      className={`min-h-screen flex items-center justify-center bg-background text-text transition-colors duration-300 ${themeClass}`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,24 +68,26 @@ export default function Signup() {
 
         {/* Role Selector */}
         <div className="flex justify-center mb-6 space-x-4">
-  {["customer", "vendor"].map((r) => (
-    <button
-      key={r}
-      onClick={() => setRole(r)}
-      className={`px-4 py-2 rounded-full font-medium transition ${
-        role === r
-          ? "bg-accent text-background"
-          : "bg-muted text-muted-foreground hover:bg-muted/80"
-      }`}
-    >
-      {r.charAt(0).toUpperCase() + r.slice(1)}
-    </button>
-  ))}
-</div>
-
+          {["customer", "vendor"].map((r) => (
+            <button
+              key={r}
+              onClick={() => setRole(r)}
+              className={`px-4 py-2 rounded-full font-medium transition ${
+                role === r
+                  ? "bg-accent text-background"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
+            >
+              {r.charAt(0).toUpperCase() + r.slice(1)}
+            </button>
+          ))}
+        </div>
 
         {/* Signup Form */}
-        <form className="space-y-4" onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}>
+        <form
+          className="space-y-4"
+          onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}
+        >
           {/* Full Name */}
           <div>
             <label className="block mb-1 font-medium">Full Name</label>
@@ -180,9 +185,9 @@ export default function Signup() {
         {/* Navigation to Login */}
         <p className="text-sm text-center mt-6 text-muted-foreground">
           Already have an account?{" "}
-          <a href="/login" className="text-accent hover:underline">
+          <Link to="/login" className="text-accent hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </motion.div>
     </div>
