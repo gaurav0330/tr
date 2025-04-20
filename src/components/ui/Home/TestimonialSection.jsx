@@ -23,16 +23,16 @@ export default function TestimonialSection() {
   ];
 
   return (
-    <section className="py-12 px-6 md:px-16 bg-background text-text">
+    <section className="py-12 px-4 md:px-16 bg-background text-text">
       <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
         What Our Users Say
       </h2>
 
-      <div className="flex justify-center space-x-6">
+      <div className="flex flex-col md:flex-row gap-6 justify-center items-center md:items-stretch">
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
-            className="flex flex-col items-center bg-card text-card-foreground p-6 rounded-2xl shadow-md hover:shadow-lg transition w-72"
+            className="flex flex-col items-center bg-card text-card-foreground p-6 rounded-2xl shadow-md hover:shadow-lg transition w-full max-w-xs mb-6 md:mb-0"
           >
             <img
               src={testimonial.profilePic}
@@ -46,7 +46,9 @@ export default function TestimonialSection() {
                 <Star
                   key={i}
                   size={16}
-                  className={i < testimonial.rating ? "text-yellow-400" : "text-gray-300"}
+                  className={
+                    i < testimonial.rating ? "text-yellow-400" : "text-gray-300"
+                  }
                 />
               ))}
             </div>
