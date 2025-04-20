@@ -14,6 +14,7 @@ module.exports = {
         text: "hsl(var(--text))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        logoIt: 'hsl(var(--logoIt))',
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

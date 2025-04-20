@@ -8,11 +8,11 @@ import HowItWorksSection from "../components/ui/Home/HowItWorksSection";
 // import HowItWorks from "../components/HowItWorks";
 // import LoginOptions from "../components/LoginOptions";
 
-export default function HowPage() {
+export default function HomePage() {
   return (
     <div>
 
-     
+  
       <CategoriesSection />
       <HowItWorksSection />
 

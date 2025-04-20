@@ -9,6 +9,7 @@
   --accent: 218 39% 10%; /* blue-500 */
   --primary: 200 100% 50%;
   --secondary: 142 76% 36%; /* green-500 */
+  --logoIt : 142 71% 45%;
 }
 
 /* Dark Mode Variables */
@@ -18,7 +19,8 @@
   --accent: 142 71% 45%; /* green-400 */
   --primary: 180 100% 35%;
   --secondary: 142 76% 36%;
-  --card: 214 37% 12%;
+  --card: 214 37% 12%;
+  --logoIt : 142 71% 45%;
 }
 
 
