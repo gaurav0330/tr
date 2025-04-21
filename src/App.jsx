@@ -8,6 +8,7 @@ import Login from "./pages/Auth/Login.jsx";
 import Header from "./components/ui/Header.jsx";
 import Footer from "./components/ui/Footer.jsx";
 import Signup from "./pages/Auth/Signup.jsx";
+import Dashboard from "./pages/Vendor/Dashboard.jsx";
 
 
 function AppRouter() {
@@ -16,6 +17,7 @@ function AppRouter() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
+      <Route path="dashboard" element={<Dashboard/>} />
     </Routes>
   );
 }
