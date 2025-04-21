@@ -1,13 +1,7 @@
 import { Link } from "react-router-dom";
 import {
-  MoonIcon,
-  SunIcon,
-  MenuIcon,
-  XIcon,
-  HomeIcon,
-  BriefcaseIcon,
-  InfoIcon,
-  MailIcon,
+  MoonIcon, SunIcon, MenuIcon, XIcon,
+  HomeIcon, BriefcaseIcon, InfoIcon, MailIcon
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { useIsMobile } from "../../hooks/use-mobile.js";
@@ -26,63 +20,37 @@ export default function Header() {
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
           <img
-            src={isDarkMode ? DarkLogo : LightLogo} // Conditionally render logo based on theme
+            src={isDarkMode ? DarkLogo : LightLogo}
             alt="Logo"
             className="h-8"
           />
           <span className="text-2xl font-bold">
-            <span className={isDarkMode ? "text-text" : "text-text"}>
-              Findy
-            </span>
+            <span className="text-text">Findy</span>
             <span className="text-logoIt">It</span>
           </span>
         </Link>
 
-        {/* Mobile Toggle */}
-        {isMobile && (
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-md hover:bg-accent/20 text-text"
-          >
-            {isMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
-          </button>
-        )}
+        {/* Desktop Nav - Horizontally centered */}
+        <div className="hidden md:flex flex-1 justify-center items-center space-x-6">
+          {[{ to: "/", label: "Home", Icon: HomeIcon },
+            { to: "/services", label: "Services", Icon: BriefcaseIcon },
+            { to: "/about", label: "About Us", Icon: InfoIcon },
+            { to: "/contact", label: "Contact", Icon: MailIcon }
+          ].map(({ to, label, Icon }) => (
+            <Link
+              to={to}
+              key={label}
+              className="flex items-center space-x-2 px-2 py-2 hover:text-accent transition-colors"
+            >
+              <Icon size={20} />
+              <span>{label}</span>
+            </Link>
+          ))}
+        </div>
 
-        {/* Navigation */}
-        <nav
-          className={`md:flex ${
-            isMobile
-              ? "absolute left-0 w-full bg-background text-text shadow-md top-16"
-              : "hidden md:flex"
-          } ${isMenuOpen ? "block" : "hidden md:block"} transition-colors`}
-        >
-          <div className="flex flex-col md:flex-row md:space-x-6">
-            {[
-              { to: "/", label: "Home", Icon: HomeIcon },
-              { to: "/services", label: "Services", Icon: BriefcaseIcon },
-              { to: "/about", label: "About Us", Icon: InfoIcon },
-              { to: "/contact", label: "Contact", Icon: MailIcon },
-            ].map(({ to, label, Icon }) => (
-              <Link
-                to={to}
-                key={label}
-                className="flex items-center space-x-2 px-4 py-2 hover:text-accent transition-colors"
-              >
-                <Icon size={20} />
-                <span>{label}</span>
-              </Link>
-            ))}
-          </div>
-        </nav>
-
-        {/* Right-side actions */}
-        <div className="flex items-center space-x-4">
-          <Link
-            to="/login"
-            className="hover:underline hover:text-accent transition-colors"
-          >
-            Login
-          </Link>
+        {/* Right-side actions (desktop only) */}
+        <div className="hidden md:flex items-center space-x-4">
+          <Link to="/login" className="hover:underline hover:text-accent transition-colors">Login</Link>
           <Link
             to="/register"
             className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
@@ -96,7 +64,66 @@ export default function Header() {
             {isDarkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
           </button>
         </div>
+
+        {/* Mobile Hamburger */}
+        {isMobile && (
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 rounded-md hover:bg-accent/20 text-text md:hidden"
+          >
+            {isMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
+          </button>
+        )}
       </div>
+
+      {/* Mobile Menu */}
+      {isMobile && isMenuOpen && (
+        <nav className="md:hidden bg-background text-text px-4 py-4 shadow-md">
+          <div className="flex flex-col space-y-4">
+            {[{ to: "/", label: "Home", Icon: HomeIcon },
+              { to: "/services", label: "Services", Icon: BriefcaseIcon },
+              { to: "/about", label: "About Us", Icon: InfoIcon },
+              { to: "/contact", label: "Contact", Icon: MailIcon }
+            ].map(({ to, label, Icon }) => (
+              <Link
+                to={to}
+                key={label}
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center space-x-2 px-2 py-2 hover:text-accent transition-colors"
+              >
+                <Icon size={20} />
+                <span>{label}</span>
+              </Link>
+            ))}
+
+            <hr className="my-2 border-muted" />
+
+            <Link
+              to="/login"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:underline hover:text-accent transition-colors"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              onClick={() => setIsMenuOpen(false)}
+              className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
+            >
+              Register
+            </Link>
+            <button
+              onClick={() => {
+                toggleDarkMode();
+                setIsMenuOpen(false);
+              }}
+              className="mt-2 p-2 rounded-full bg-accent text-background hover:opacity-80 transition self-start"
+            >
+              {isDarkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
+            </button>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
