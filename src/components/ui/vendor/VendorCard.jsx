@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { MapPinIcon, PhoneIcon, CheckCircleIcon } from "lucide-react";
-import StarRating from "../ui/StarRating";
-import { useToast } from "../../contexts/ToastContext";
-import { getCategoryColor } from "../../lib/utils";
-import VendorMap from "../map/vendorMap";
+import StarRating from "../StarRating";
+import { useToast } from "../../../contexts/ToastContext";
+import { getCategoryColor } from "../../../lib/utils";
+import VendorMap from "../../map/vendorMap";
 
 /**
  * VendorCard - Displays vendor information with an interactive contact button
