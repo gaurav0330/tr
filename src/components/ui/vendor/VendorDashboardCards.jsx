@@ -3,9 +3,9 @@ import React from "react";
 // ✅ Reusable Card Component
 const Card = ({ title, actions, children, className = "" }) => {
   return (
-    <div className={`bg-card text-text p-2 rounded-2xl shadow-md max-h-[300px] ${className}`}>
+    <div className={`bg-card text-text p-4 rounded-2xl shadow-md min-h-[350px] overflow-y-auto ${className}`}>
       {(title || actions) && (
-        <div className="flex justify-between items-center mb-1">
+        <div className="flex justify-between items-center mb-3">
           {title && <h2 className="text-lg font-semibold">{title}</h2>}
           {actions && <div>{actions}</div>}
         </div>
@@ -14,6 +14,7 @@ const Card = ({ title, actions, children, className = "" }) => {
     </div>
   );
 };
+
 
 
 // ✅ Vendor Overview
