@@ -8,6 +8,8 @@ import Footer from "./components/ui/Footer.jsx";
 import Signup from "./pages/Auth/Signup.jsx";
 import Dashboard from "./pages/Vendor/Dashboard.jsx";
 import StepperForm from "./pages/Vendor/Form.jsx";
+import VendorListingPage from "./pages/Customer/VendorListingPage.jsx";
+import CustomerDashboard from "./pages/Customer/CustomerDashboard.jsx";
 
 function AppRouter() {
   return (
@@ -17,6 +19,8 @@ function AppRouter() {
       <Route path="/register" element={<Signup />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="/form" element={<StepperForm />} />
+      <Route path="/vendors" element={<VendorListingPage />} />
+      <Route path="/customerdashboard" element={<CustomerDashboard />} />
     </Routes>
   );
 }
