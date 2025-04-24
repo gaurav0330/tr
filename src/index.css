@@ -10,6 +10,7 @@
   --primary: 200 100% 50%;
   --secondary: 142 76% 36%; /* green-500 */
   --logoIt : 142 71% 45%;
+  --darkInput: : 220, 13%, 18%; 
 }
 
 /* Dark Mode Variables */
@@ -21,6 +22,7 @@
   --secondary: 142 76% 36%;
   --card: 214 37% 12%;
   --logoIt : 142 71% 45%;
+  --darkInput: : 220, 13%, 18%; 
 }
 
 
