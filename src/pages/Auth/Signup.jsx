@@ -1,11 +1,17 @@
+// Signup.jsx
 import { useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { auth, RecaptchaVerifier } from "../../firebase"; // Import auth
+import {
+  signInWithPhoneNumber,
+} from "firebase/auth";
+import Cookies from "js-cookie";
 
 export default function Signup() {
   const { isDarkMode } = useTheme();
-  const [role, setRole] = useState("customer"); // 'customer' | 'vendor'
+  const [role, setRole] = useState("customer");
   const [formData, setFormData] = useState({
     name: "",
     businessName: "",
@@ -15,16 +21,15 @@ export default function Signup() {
   });
   const [countryCode, setCountryCode] = useState("+91");
   const [otpSent, setOtpSent] = useState(false);
+  const [confirmationResult, setConfirmationResult] = useState(null);
 
   const themeClass = isDarkMode ? "dark" : "light";
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Form validation before sending OTP
   const validateBeforeOtp = () => {
     const { name, phone, email, businessName } = formData;
     if (!name || !phone || !email || (role === "vendor" && !businessName)) {
@@ -34,23 +39,57 @@ export default function Signup() {
     return true;
   };
 
-  // Handle OTP send
-  const handleSendOtp = (e) => {
-    e.preventDefault();
-    if (!validateBeforeOtp()) return;
-    // Simulate OTP sending logic here
-    setOtpSent(true);
+  const setupRecaptcha = () => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: () => {},
+          "expired-callback": () => {
+            alert("Recaptcha expired, try again.");
+          },
+        }
+      );
+    }
   };
 
-  // Handle OTP verification
-  const handleVerifyOtp = (e) => {
+  const handleSendOtp = async (e) => {
     e.preventDefault();
-    if (!formData.otp) {
-      alert("Please enter the OTP.");
-      return;
+    if (!validateBeforeOtp()) return;
+
+    setupRecaptcha();
+    const appVerifier = window.recaptchaVerifier;
+
+    try {
+      const fullPhone = `${countryCode}${formData.phone}`;
+      const result = await signInWithPhoneNumber(auth, fullPhone, appVerifier);
+      setConfirmationResult(result);
+      setOtpSent(true);
+      alert("OTP sent successfully.");
+    } catch (err) {
+      console.error("OTP error:", err);
+      alert("Failed to send OTP. Please try again.");
     }
-    // Simulate OTP verification
-    alert("Signup successful!");
+  };
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    if (!formData.otp) return alert("Please enter the OTP.");
+
+    try {
+      await confirmationResult.confirm(formData.otp);
+      Cookies.set("userPhone", `${countryCode}${formData.phone}`, {
+        expires: 7, 
+        secure: true,
+        sameSite: "Strict",
+      });
+      alert("✅ Signup successful!");
+    } catch (err) {
+      console.error("OTP Verification failed:", err);
+      alert("❌ Invalid OTP. Please try again.");
+    }
   };
 
   return (
@@ -83,12 +122,11 @@ export default function Signup() {
           ))}
         </div>
 
-        {/* Signup Form */}
         <form
           className="space-y-4"
           onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}
         >
-          {/* Full Name */}
+          {/* Name */}
           <div>
             <label className="block mb-1 font-medium">Full Name</label>
             <input
@@ -102,7 +140,7 @@ export default function Signup() {
             />
           </div>
 
-          {/* Business Name - Only for Vendors */}
+          {/* Business Name */}
           {role === "vendor" && (
             <div>
               <label className="block mb-1 font-medium">Business Name</label>
@@ -132,7 +170,7 @@ export default function Signup() {
             />
           </div>
 
-          {/* Phone with country code */}
+          {/* Phone */}
           <div>
             <label className="block mb-1 font-medium">Phone Number</label>
             <div className="flex gap-2">
@@ -157,7 +195,7 @@ export default function Signup() {
             </div>
           </div>
 
-          {/* OTP Input - Shown only after sending OTP */}
+          {/* OTP */}
           {otpSent && (
             <div>
               <label className="block mb-1 font-medium">Enter OTP</label>
@@ -173,7 +211,6 @@ export default function Signup() {
             </div>
           )}
 
-          {/* Action Button */}
           <button
             type="submit"
             className="w-full bg-accent text-background font-semibold py-2 rounded-md hover:brightness-110 transition"
@@ -182,7 +219,9 @@ export default function Signup() {
           </button>
         </form>
 
-        {/* Navigation to Login */}
+        {/* Recaptcha container (invisible) */}
+        <div id="recaptcha-container"></div>
+
         <p className="text-sm text-center mt-6 text-muted-foreground">
           Already have an account?{" "}
           <Link to="/login" className="text-accent hover:underline">
