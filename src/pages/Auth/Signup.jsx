@@ -1,16 +1,15 @@
-// Signup.jsx
 import { useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { auth, RecaptchaVerifier } from "../../firebase"; // Import auth
-import {
-  signInWithPhoneNumber,
-} from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, RecaptchaVerifier } from "../../firebase";
+import { signInWithPhoneNumber } from "firebase/auth";
 import Cookies from "js-cookie";
 
 export default function Signup() {
   const { isDarkMode } = useTheme();
+  const navigate = useNavigate();
+
   const [role, setRole] = useState("customer");
   const [formData, setFormData] = useState({
     name: "",
@@ -22,6 +21,7 @@ export default function Signup() {
   const [countryCode, setCountryCode] = useState("+91");
   const [otpSent, setOtpSent] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const themeClass = isDarkMode ? "dark" : "light";
 
@@ -33,7 +33,7 @@ export default function Signup() {
   const validateBeforeOtp = () => {
     const { name, phone, email, businessName } = formData;
     if (!name || !phone || !email || (role === "vendor" && !businessName)) {
-      alert("Please fill in all required fields.");
+      alert("❌ Please fill in all required fields.");
       return false;
     }
     return true;
@@ -41,17 +41,13 @@ export default function Signup() {
 
   const setupRecaptcha = () => {
     if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: () => {},
-          "expired-callback": () => {
-            alert("Recaptcha expired, try again.");
-          },
-        }
-      );
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+        size: "invisible",
+        callback: () => {},
+        "expired-callback": () => {
+          alert("⚠️ Recaptcha expired, please try again.");
+        },
+      });
     }
   };
 
@@ -61,16 +57,19 @@ export default function Signup() {
 
     setupRecaptcha();
     const appVerifier = window.recaptchaVerifier;
+    const fullPhone = `${countryCode}${formData.phone}`;
 
     try {
-      const fullPhone = `${countryCode}${formData.phone}`;
+      setLoading(true);
       const result = await signInWithPhoneNumber(auth, fullPhone, appVerifier);
       setConfirmationResult(result);
       setOtpSent(true);
-      alert("OTP sent successfully.");
-    } catch (err) {
-      console.error("OTP error:", err);
-      alert("Failed to send OTP. Please try again.");
+      alert("📩 OTP sent successfully.");
+    } catch (error) {
+      console.error("OTP error:", error);
+      alert("❌ Failed to send OTP. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,23 +78,30 @@ export default function Signup() {
     if (!formData.otp) return alert("Please enter the OTP.");
 
     try {
+      setLoading(true);
       await confirmationResult.confirm(formData.otp);
       Cookies.set("userPhone", `${countryCode}${formData.phone}`, {
-        expires: 7, 
+        expires: 7,
         secure: true,
         sameSite: "Strict",
       });
       alert("✅ Signup successful!");
-    } catch (err) {
-      console.error("OTP Verification failed:", err);
+
+      if (role === "vendor") {
+        navigate("/dashboard");
+      } else {
+        navigate("/customerdashboard");
+      }
+    } catch (error) {
+      console.error("OTP Verification failed:", error);
       alert("❌ Invalid OTP. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div
-      className={`min-h-screen flex items-center justify-center bg-background text-text transition-colors duration-300 ${themeClass}`}
-    >
+    <div className={`min-h-screen flex items-center justify-center bg-background text-text ${themeClass}`}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -122,20 +128,18 @@ export default function Signup() {
           ))}
         </div>
 
-        <form
-          className="space-y-4"
-          onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}
-        >
+        {/* Signup Form */}
+        <form className="space-y-4" onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}>
           {/* Name */}
           <div>
             <label className="block mb-1 font-medium">Full Name</label>
             <input
               type="text"
               name="name"
-              placeholder="Enter your full name"
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
+              placeholder="Enter your full name"
               required
             />
           </div>
@@ -147,10 +151,10 @@ export default function Signup() {
               <input
                 type="text"
                 name="businessName"
-                placeholder="Enter your business name"
                 value={formData.businessName}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
+                placeholder="Enter your business name"
                 required
               />
             </div>
@@ -162,10 +166,10 @@ export default function Signup() {
             <input
               type="email"
               name="email"
-              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -186,10 +190,10 @@ export default function Signup() {
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone number"
                 value={formData.phone}
                 onChange={handleChange}
                 className="flex-1 px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
+                placeholder="Phone number"
                 required
               />
             </div>
@@ -202,25 +206,38 @@ export default function Signup() {
               <input
                 type="text"
                 name="otp"
-                placeholder="Enter the OTP"
                 value={formData.otp}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md bg-background text-text border-gray-300 dark:border-gray-600"
+                placeholder="Enter the OTP"
                 required
               />
             </div>
           )}
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-accent text-background font-semibold py-2 rounded-md hover:brightness-110 transition"
+            className="w-full bg-accent text-background font-semibold py-2 rounded-md hover:brightness-110 transition disabled:opacity-60"
+            disabled={loading}
           >
-            {otpSent ? "Verify OTP & Sign Up" : "Send OTP"}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-background" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 01-8 8z"
+                  />
+                </svg>
+                Processing...
+              </span>
+            ) : otpSent ? "Verify OTP & Sign Up" : "Send OTP"}
           </button>
         </form>
 
-        {/* Recaptcha container (invisible) */}
-        <div id="recaptcha-container"></div>
+        <div id="recaptcha-container" className="mt-2"></div>
 
         <p className="text-sm text-center mt-6 text-muted-foreground">
           Already have an account?{" "}
