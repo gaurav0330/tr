@@ -1,5 +1,6 @@
 // src/pages/HowPage.jsx
 import CategoriesSection from "../components/ui/Home/CategoriesSection";
+import HomeSearchBar from "../components/ui/Home/HomeSearchBar";
 import HowItWorksSection from "../components/ui/Home/HowItWorksSection";
 import LoginOptionsSection from "../components/ui/Home/LoginOptionsSection";
 import TestimonialSection from "../components/ui/Home/TestimonialSection";
@@ -12,6 +13,7 @@ import TopVendorsSection from "../components/ui/Home/TopVendorsSection";
 export default function HomePage() {
   return (
     <div>
+      <HomeSearchBar />
       <CategoriesSection />
       <HowItWorksSection />
       <LoginOptionsSection />

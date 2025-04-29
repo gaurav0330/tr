@@ -2,7 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { SearchIcon, FilterIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function SearchAndFilterBar({ onSearch, onFilter, categories, selectedCategory }) {
+export default function SearchAndFilterBar({
+  onSearch,
+  onFilter,
+  categories,
+  selectedCategory,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
