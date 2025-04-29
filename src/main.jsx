@@ -13,14 +13,10 @@ import './index.css';
 
 // Render the React app into the root element
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    {/* ThemeProvider manages light/dark mode preferences */}
-    <ThemeProvider>
-      {/* ToastProvider enables notifications throughout the app */}
-      <ToastProvider>
-        {/* Main Application Component */}
-        <App />
-      </ToastProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+  <ThemeProvider>
+    <ToastProvider>
+      <App />
+    </ToastProvider>
+  </ThemeProvider>
 );
+
