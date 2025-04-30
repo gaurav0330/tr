@@ -11,7 +11,7 @@ export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, logout } = useAuth();  // Destructure 'user' instead of 'userPhone'
+  const { user, logout } = useAuth(); 
   const navigate = useNavigate();
 
   const handleLogout = () => {
