@@ -1,11 +1,9 @@
-import { Link } from "react-router-dom";
-import {
-  MoonIcon, SunIcon, MenuIcon, XIcon,
-  HomeIcon, BriefcaseIcon, InfoIcon, MailIcon
-} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext.jsx";
+import { MoonIcon, SunIcon, MenuIcon, XIcon, HomeIcon, BriefcaseIcon, InfoIcon, MailIcon } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { useIsMobile } from "../../hooks/use-mobile.js";
-import { useState } from "react";
 import DarkLogo from "../../assets/Dark.png";
 import LightLogo from "../../assets/light.png";
 
@@ -13,6 +11,20 @@ export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout } = useAuth();  // Destructure 'user' instead of 'userPhone'
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const navLinks = [
+    { to: "/", label: "Home", Icon: HomeIcon },
+    { to: "/services", label: "Services", Icon: BriefcaseIcon },
+    { to: "/about", label: "About Us", Icon: InfoIcon },
+    { to: "/contact", label: "Contact", Icon: MailIcon }
+  ];
 
   return (
     <header className="sticky top-0 z-50 py-4 shadow-md bg-background text-text transition-colors">
@@ -30,13 +42,9 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Desktop Nav - Horizontally centered */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex flex-1 justify-center items-center space-x-6">
-          {[{ to: "/", label: "Home", Icon: HomeIcon },
-            { to: "/services", label: "Services", Icon: BriefcaseIcon },
-            { to: "/about", label: "About Us", Icon: InfoIcon },
-            { to: "/contact", label: "Contact", Icon: MailIcon }
-          ].map(({ to, label, Icon }) => (
+          {navLinks.map(({ to, label, Icon }) => (
             <Link
               to={to}
               key={label}
@@ -48,15 +56,24 @@ export default function Header() {
           ))}
         </div>
 
-        {/* Right-side actions (desktop only) */}
+        {/* Desktop Right Side */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/login" className="hover:underline hover:text-accent transition-colors">Login</Link>
-          <Link
-            to="/register"
-            className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
-          >
-            Register
-          </Link>
+          {user ? (
+            <>
+              <Link to="/profile" className="hover:underline hover:text-accent">Profile</Link>
+              <button onClick={handleLogout} className="text-red-500 hover:underline">Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="hover:underline hover:text-accent">Login</Link>
+              <Link
+                to="/register"
+                className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
+              >
+                Register
+              </Link>
+            </>
+          )}
           <button
             onClick={toggleDarkMode}
             className="ml-2 p-2 rounded-full bg-accent text-background hover:opacity-80 transition"
@@ -80,11 +97,7 @@ export default function Header() {
       {isMobile && isMenuOpen && (
         <nav className="md:hidden bg-background text-text px-4 py-4 shadow-md">
           <div className="flex flex-col space-y-4">
-            {[{ to: "/", label: "Home", Icon: HomeIcon },
-              { to: "/services", label: "Services", Icon: BriefcaseIcon },
-              { to: "/about", label: "About Us", Icon: InfoIcon },
-              { to: "/contact", label: "Contact", Icon: MailIcon }
-            ].map(({ to, label, Icon }) => (
+            {navLinks.map(({ to, label, Icon }) => (
               <Link
                 to={to}
                 key={label}
@@ -98,20 +111,44 @@ export default function Header() {
 
             <hr className="my-2 border-muted" />
 
-            <Link
-              to="/login"
-              onClick={() => setIsMenuOpen(false)}
-              className="hover:underline hover:text-accent transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              onClick={() => setIsMenuOpen(false)}
-              className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
-            >
-              Register
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/profile"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="hover:underline hover:text-accent transition-colors"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="text-red-500 hover:underline text-left"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="hover:underline hover:text-accent transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="bg-accent text-background font-semibold px-4 py-2 rounded hover:brightness-110 transition"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+
             <button
               onClick={() => {
                 toggleDarkMode();

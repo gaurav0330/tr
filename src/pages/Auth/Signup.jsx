@@ -3,12 +3,14 @@ import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, RecaptchaVerifier } from "../../firebase";
-import { signInWithPhoneNumber } from "firebase/auth";
+import { signInWithPhoneNumber, getAuth, updateProfile } from "firebase/auth"; 
 import Cookies from "js-cookie";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
 export default function Signup() {
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [role, setRole] = useState("customer");
   const [formData, setFormData] = useState({
@@ -76,17 +78,27 @@ export default function Signup() {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     if (!formData.otp) return alert("Please enter the OTP.");
+    const fullPhone = `${countryCode}${formData.phone}`;
 
     try {
       setLoading(true);
-      await confirmationResult.confirm(formData.otp);
-      Cookies.set("userPhone", `${countryCode}${formData.phone}`, {
-        expires: 7,
-        secure: true,
-        sameSite: "Strict",
+      const userCredential = await confirmationResult.confirm(formData.otp);
+      const user = userCredential.user;
+      const uid = user.uid;
+      const email = formData.email;
+      const name = formData.name;
+      
+      // Update profile info (optional)
+      await updateProfile(user, {
+        displayName: name,
       });
+
+      // Store user details in the context and cookies
+      login(fullPhone, uid, email, name, role);
+      
       alert("✅ Signup successful!");
 
+      // Navigate based on role
       if (role === "vendor") {
         navigate("/dashboard");
       } else {
