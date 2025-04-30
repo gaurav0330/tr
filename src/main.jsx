@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 // Import global providers
 import { ThemeProvider } from './contexts/ThemeContext.jsx';
 import { ToastProvider } from './contexts/ToastContext.jsx';
+import { AuthProvider } from './contexts/AuthContext.jsx';
 
 // Import the main application component
 import App from './App.jsx';
@@ -18,8 +19,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider>
       {/* ToastProvider enables notifications throughout the app */}
       <ToastProvider>
+      <AuthProvider>
         {/* Main Application Component */}
         <App />
+      </AuthProvider>
       </ToastProvider>
     </ThemeProvider>
   </React.StrictMode>

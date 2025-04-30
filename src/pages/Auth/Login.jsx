@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, RecaptchaVerifier } from "../../firebase";
 import { signInWithPhoneNumber } from "firebase/auth";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import Cookies from "js-cookie";
 
 export default function Login() {
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
-
+  const { login } = useAuth();
   const [role, setRole] = useState("customer");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
@@ -69,12 +70,17 @@ export default function Login() {
 
     try {
       setLoading(true);
-      await confirmationResult.confirm(otp);
-      Cookies.set("userPhone", `${countryCode}${phone}`, {
-        expires: 7,
-        secure: true,
-        sameSite: "Strict",
-      });
+      const userCredential = await confirmationResult.confirm(otp);
+      const user = userCredential.user;
+      const uid = user.uid;
+      const phoneNumber = `${countryCode}${phone}`;
+
+      // You can retrieve additional user data (like email, role) from your database if necessary
+      // Here I'm assuming you are saving only phone number in cookies, but you can extend it to include the full user data.
+      
+      // For now, storing just phone and uid in cookies for the purpose of login
+      login(phoneNumber, uid, "", "", role);  // Update the login function to accept more user data as needed
+
       alert("✅ Login successful!");
       navigate(role === "vendor" ? "/dashboard" : "/customerdashboard");
     } catch (error) {
