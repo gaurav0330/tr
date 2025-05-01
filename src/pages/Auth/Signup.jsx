@@ -6,6 +6,9 @@ import { auth, RecaptchaVerifier } from "../../firebase";
 import { signInWithPhoneNumber, getAuth, updateProfile } from "firebase/auth"; 
 import Cookies from "js-cookie";
 import { useAuth } from "../../contexts/AuthContext.jsx";
+import { db } from "../../firebase.js"; // Ensure db is your initialized Firestore instance
+import { doc, setDoc } from "firebase/firestore";
+
 
 export default function Signup() {
   const { isDarkMode } = useTheme();
@@ -88,10 +91,22 @@ export default function Signup() {
       const email = formData.email;
       const name = formData.name;
       
-      // Update profile info (optional)
+      
+
       await updateProfile(user, {
         displayName: name,
       });
+
+      // Add user to Firestore
+    await setDoc(doc(db, "users", uid), {
+      uid,
+      name,
+      email,
+      phone: fullPhone,
+      role,
+      businessName: role === "vendor" ? formData.businessName : "",
+      createdAt: new Date().toISOString(),
+    });
 
       // Store user details in the context and cookies
       login(fullPhone, uid, email, name, role);
