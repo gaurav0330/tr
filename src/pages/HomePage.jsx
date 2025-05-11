@@ -5,6 +5,8 @@ import HowItWorksSection from "../components/ui/Home/HowItWorksSection";
 import LoginOptionsSection from "../components/ui/Home/LoginOptionsSection";
 import TestimonialSection from "../components/ui/Home/TestimonialSection";
 import TopVendorsSection from "../components/ui/Home/TopVendorsSection";
+import AppComingSoonSection from "../components/ui/Home/AppComingSoonSection";
+import MostViewedServicesSection from "../components/ui/Home/MostViewedServices";
 // import HeroSection from "../components/HeroSection";
 // import CategoryCards from "../components/CategoryCards";
 // import HowItWorks from "../components/HowItWorks";
@@ -15,9 +17,11 @@ export default function HomePage() {
     <div>
       <HomeSearchBar />
       <CategoriesSection />
+      <MostViewedServicesSection/>
       <HowItWorksSection />
-      <LoginOptionsSection />
+      {/* <LoginOptionsSection /> */}
       <TopVendorsSection />
+      <AppComingSoonSection/>
       <TestimonialSection />
 
       {/* <Header /> */}

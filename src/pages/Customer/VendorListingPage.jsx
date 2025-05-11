@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom"; // Import useParams
 import { Heart } from "lucide-react";
 import VendorCard from "../../components/ui/vendor/VendorCard";
 import FilterBar from "../../components/ui/FilterBar";
@@ -32,8 +33,9 @@ const infoContent = {
 };
 
 export default function VendorListingPage() {
+  const { category } = useParams(); // Get the category from the URL
   const [selectedPage, setSelectedPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(category || ""); // Set search to the selected category
   const [experienceFilter, setExperienceFilter] = useState("Any");
   const [ratingFilter, setRatingFilter] = useState("Any");
   const [distanceFilter, setDistanceFilter] = useState("Any");
@@ -94,8 +96,7 @@ export default function VendorListingPage() {
   return (
     <div className="min-h-screen bg-background text-text">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-extrabold mb-8">Vendors Near You</h1>
-
+        <h1 className="text-3xl font-extrabold mb-8">{category} Vendors</h1> {/* Display selected category */}
         <FilterBar
           search={search}
           setSearch={setSearch}

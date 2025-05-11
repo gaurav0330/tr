@@ -1,41 +1,62 @@
+import { Briefcase, Lock, Search } from "lucide-react";
+
 export default function HowItWorksSection() {
   const steps = [
     {
-      number: 1,
-      title: "Search vendors",
-      description: "Find local vendors in your area",
+      icon: <Search className="w-14 h-14 text-accent" />,
+      title: "Search Vendors",
+      description: "Browse vendors by location and category.",
     },
     {
-      number: 2,
-      title: "View details",
-      description: "Check vendor profiles and services",
+      icon: <Lock className="w-14 h-14 text-accent" />,
+      title: "View & Unlock Contact",
+      description: "Check vendor details and unlock contact.",
     },
     {
-      number: 3,
-      title: "Unlock contact",
-      description: "Access vendor contact information",
+      icon: <Briefcase className="w-14 h-14 text-accent" />,
+      title: "Get Service",
+      description: "Connect instantly and get service done seamlessly.",
     },
   ];
 
   return (
     <section className="py-12 px-6 md:px-16 bg-background text-text">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-        How it works
+      <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
+        HOW IT WORKS
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {steps.map((step) => (
+      <div className="flex flex-col md:flex-row items-center justify-between gap-10 max-w-7xl mx-auto relative">
+        {steps.map((step, index) => (
           <div
-            key={step.number}
-            className="flex flex-col items-center bg-[hsl(var(--card))] text-[hsl(var(--text))] p-6 rounded-xl shadow-md text-center"
+            key={index}
+            className="flex-1 flex flex-col items-center text-center min-w-[150px] px-2 relative"
           >
-            <div className="w-12 h-12 rounded-full bg-[hsl(var(--accent))] text-white flex items-center justify-center text-lg font-semibold mb-4">
-              {step.number}
+            {/* Connector Dots (Only between steps) */}
+            {index < steps.length - 1 && (
+              <div className="hidden md:block absolute right-0 top-[36px] translate-x-1/2">
+                <div className="flex space-x-1">
+                  {[...Array(30)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1 h-1 rounded-full bg-accent"
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Icon */}
+            <div className="mb-3">{step.icon}</div>
+
+            {/* Text */}
+            <div className="max-w-[7.5rem]">
+              <h3 className="text-sm font-medium mb-1 leading-tight">
+                {step.title}
+              </h3>
+              <p className="text-xs text-text/80 leading-snug">
+                {step.description}
+              </p>
             </div>
-            <h3 className="text-lg font-semibold mb-1">{step.title}</h3>
-            <p className="text-sm text-[hsl(var(--text)/0.8)]">
-              {step.description}
-            </p>
           </div>
         ))}
       </div>
