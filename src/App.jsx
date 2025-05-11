@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "./components/ui/toaster.jsx";
 
-import HomePage from "./pages/HomePage.jsx"; // Import the HowPage
+import HomePage from "./pages/HomePage.jsx";
 import Login from "./pages/Auth/Login.jsx";
 import Header from "./components/ui/Header.jsx";
 import Footer from "./components/ui/Footer.jsx";
@@ -19,7 +19,7 @@ function AppRouter() {
       <Route path="/register" element={<Signup />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="/form" element={<StepperForm />} />
-      <Route path="/vendors" element={<VendorListingPage />} />
+      <Route path="/vendor-listing/:category" element={<VendorListingPage />} /> {/* Updated route */}
       <Route path="/customerdashboard" element={<CustomerDashboard />} />
     </Routes>
   );
