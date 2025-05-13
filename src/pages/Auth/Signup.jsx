@@ -3,12 +3,11 @@ import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, RecaptchaVerifier } from "../../firebase";
-import { signInWithPhoneNumber, getAuth, updateProfile } from "firebase/auth"; 
+import { signInWithPhoneNumber, getAuth, updateProfile } from "firebase/auth";
 import Cookies from "js-cookie";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import { db } from "../../firebase.js"; // Ensure db is your initialized Firestore instance
 import { doc, setDoc } from "firebase/firestore";
-
 
 export default function Signup() {
   const { isDarkMode } = useTheme();
@@ -46,13 +45,17 @@ export default function Signup() {
 
   const setupRecaptcha = () => {
     if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-        size: "invisible",
-        callback: () => {},
-        "expired-callback": () => {
-          alert("⚠️ Recaptcha expired, please try again.");
-        },
-      });
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: () => {},
+          "expired-callback": () => {
+            alert("⚠️ Recaptcha expired, please try again.");
+          },
+        }
+      );
     }
   };
 
@@ -90,27 +93,25 @@ export default function Signup() {
       const uid = user.uid;
       const email = formData.email;
       const name = formData.name;
-      
-      
 
       await updateProfile(user, {
         displayName: name,
       });
 
       // Add user to Firestore
-    await setDoc(doc(db, "users", uid), {
-      uid,
-      name,
-      email,
-      phone: fullPhone,
-      role,
-      businessName: role === "vendor" ? formData.businessName : "",
-      createdAt: new Date().toISOString(),
-    });
+      await setDoc(doc(db, "users", uid), {
+        uid,
+        name,
+        email,
+        phone: fullPhone,
+        role,
+        businessName: role === "vendor" ? formData.businessName : "",
+        createdAt: new Date().toISOString(),
+      });
 
       // Store user details in the context and cookies
       login(fullPhone, uid, email, name, role);
-      
+
       alert("✅ Signup successful!");
 
       // Navigate based on role
@@ -128,7 +129,9 @@ export default function Signup() {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center bg-background text-text ${themeClass}`}>
+    <div
+      className={`min-h-screen flex items-center justify-center bg-background text-text ${themeClass}`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -156,7 +159,10 @@ export default function Signup() {
         </div>
 
         {/* Signup Form */}
-        <form className="space-y-4" onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}>
+        <form
+          className="space-y-4"
+          onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}
+        >
           {/* Name */}
           <div>
             <label className="block mb-1 font-medium">Full Name</label>
@@ -250,8 +256,18 @@ export default function Signup() {
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5 text-background" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <svg
+                  className="animate-spin h-5 w-5 text-background"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
                   <path
                     className="opacity-75"
                     fill="currentColor"
@@ -260,7 +276,11 @@ export default function Signup() {
                 </svg>
                 Processing...
               </span>
-            ) : otpSent ? "Verify OTP & Sign Up" : "Send OTP"}
+            ) : otpSent ? (
+              "Verify OTP & Sign Up"
+            ) : (
+              "Send OTP"
+            )}
           </button>
         </form>
 
