@@ -28,7 +28,7 @@ export default function AppComingSoonSection() {
           <span className="inline-block px-3 sm:px-4 py-1 bg-accent/10 text-accent rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
             Coming Soon
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-accent to-accent/70">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-text">
             FindyIt Mobile Experience
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-text/80 max-w-2xl mx-auto">
