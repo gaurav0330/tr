@@ -10,6 +10,7 @@ import Dashboard from "./pages/Vendor/Dashboard.jsx";
 import StepperForm from "./pages/Vendor/Form.jsx";
 import VendorListingPage from "./pages/Customer/VendorListingPage.jsx";
 import CustomerDashboard from "./pages/Customer/CustomerDashboard.jsx";
+import ServicePage from "./pages/ServicePage.jsx";
 
 function AppRouter() {
   return (
@@ -19,8 +20,13 @@ function AppRouter() {
       <Route path="/register" element={<Signup />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="/form" element={<StepperForm />} />
-      <Route path="/vendor-listing/:category" element={<VendorListingPage />} /> {/* Updated route */}
+      <Route
+        path="/vendor-listing/:category"
+        element={<VendorListingPage />}
+      />{" "}
+      {/* Updated route */}
       <Route path="/customerdashboard" element={<CustomerDashboard />} />
+      <Route path="/services" element={<ServicePage />} />
     </Routes>
   );
 }
