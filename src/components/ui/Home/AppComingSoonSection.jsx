@@ -153,7 +153,7 @@ export default function AppComingSoonSection() {
                 )}
               </button>
             </div>
-
+ 
             <p className="text-xs text-text/60 mt-1 sm:mt-2">
               We respect your privacy. Unsubscribe at any time.
             </p>
