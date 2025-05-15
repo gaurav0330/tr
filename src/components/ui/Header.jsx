@@ -5,7 +5,7 @@ import { MoonIcon, SunIcon, MenuIcon, XIcon, HomeIcon, BriefcaseIcon, InfoIcon, 
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { useIsMobile } from "../../hooks/use-mobile.js";
 import DarkLogo from "../../assets/Dark.png";
-import LightLogo from "../../assets/light.png";
+import LightLogo from "../../assets/Light.png";
 
 export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
