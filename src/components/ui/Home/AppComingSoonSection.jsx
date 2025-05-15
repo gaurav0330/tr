@@ -1,6 +1,6 @@
 import { useState } from "react";
-import playStoreLogo from "../../../assets/app-coming-soon/playstore2.png";
-import iosStoreLogo from "../../../assets/app-coming-soon/app-store.png";
+import playStoreLogo from "../../../assets/app-coming-soon/androidstore.png";
+import iosStoreLogo from "../../../assets/app-coming-soon/iosstore.png";
 import androidScreen from "../../../assets/app-coming-soon/android.png";
 import { Bell, CheckCircle } from "lucide-react";
 
@@ -21,8 +21,8 @@ export default function AppComingSoonSection() {
   };
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-background text-text">
-      <div className="max-w-6xl mx-auto">
+    <div className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-background text-text">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
           <span className="inline-block px-3 sm:px-4 py-1 bg-accent/10 text-accent rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
@@ -37,32 +37,12 @@ export default function AppComingSoonSection() {
           </p>
         </div>
 
-        {/* Two Column Layout */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 sm:gap-8 mb-12 sm:mb-16">
-          {/* App Preview Column */}
-          <div className="w-full lg:w-1/2 flex justify-center relative mb-8 lg:mb-0">
-            {/* Decorative elements */}
-            <div className="absolute w-48 sm:w-64 h-48 sm:h-64 bg-accent/5 rounded-full -z-10 blur-3xl" />
-
-            <div className="w-full max-w-xs relative">
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-accent/20 rounded-3xl blur-xl -z-10" />
-
-              {/* Phone frame with shadow */}
-              <div className="relative">
-                <img
-                  src={androidScreen}
-                  alt="FindyIt App Preview"
-                  className="w-full h-auto object-contain rounded-2xl"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Download Info Column */}
+        {/* Two Column Layout - COLUMNS SWAPPED */}
+        <div className="flex flex-col-reverse lg:flex-row justify-between items-center gap-4 lg:gap-3 mb-12 sm:mb-16">
+          {/* Download Info Column - NOW FIRST */}
           <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
             <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
-              Download Our App
+              Coming Soon
             </h3>
             <p className="text-sm sm:text-base text-text/80 mb-6 sm:mb-8 max-w-md">
               Be among the first to experience FindyIt on mobile. Download from
@@ -74,37 +54,39 @@ export default function AppComingSoonSection() {
             <div className="flex flex-row gap-3 sm:gap-4 mb-8 sm:mb-10 w-full sm:w-auto justify-center lg:justify-start flex-wrap">
               <a
                 href="#"
-                className="flex items-center justify-center bg-card hover:bg-card/80 border border-white/10 px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-md group min-w-fit"
+                className="hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 <img
                   src={playStoreLogo}
                   alt="Get it on Google Play"
-                  className="h-6 sm:h-8 w-auto mr-2 sm:mr-3"
+                  className="h-20 sm:h-14 w-auto"
                 />
-                <div className="text-left">
-                  <div className="text-xs text-text/70">Get it on</div>
-                  <div className="font-bold text-xs sm:text-sm group-hover:text-accent transition-colors">
-                    Google Play
-                  </div>
-                </div>
               </a>
 
               <a
                 href="#"
-                className="flex items-center justify-center bg-card hover:bg-card/80 border border-white/10 px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-md group min-w-fit"
+                className="hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 <img
                   src={iosStoreLogo}
                   alt="Download on the App Store"
-                  className="h-6 sm:h-8 w-auto mr-2 sm:mr-3"
+                  className="h-16 mt-2 sm:h-[46px] sm:mt-[5px] w-auto"
                 />
-                <div className="text-left">
-                  <div className="text-xs text-text/70">Download on the</div>
-                  <div className="font-bold text-xs sm:text-sm group-hover:text-accent transition-colors">
-                    App Store
-                  </div>
-                </div>
               </a>
+            </div>
+          </div>
+
+          {/* App Preview Column - NOW SECOND */}
+          <div className="w-full mr-12 lg:w-1/2 flex justify-center relative mb-8 lg:mb-0">
+            <div className="w-full max-w-xs relative">
+              {/* Phone frame with shadow */}
+              <div className="relative md:mb-20 ">
+                <img
+                  src={androidScreen}
+                  alt="FindyIt App Preview"
+                  className="w-full h-auto object-contain rounded-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -153,13 +135,13 @@ export default function AppComingSoonSection() {
                 )}
               </button>
             </div>
- 
+
             <p className="text-xs text-text/60 mt-1 sm:mt-2">
               We respect your privacy. Unsubscribe at any time.
             </p>
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
